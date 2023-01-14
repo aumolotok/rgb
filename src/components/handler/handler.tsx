@@ -6,12 +6,15 @@ export const Handler = (props: HandlerProps) => {
     const [isMoving, setIsMoving] = useState(false);
     const [angleInMove, setAngleInMove] = useState(0)
 
+    const handlerElement = useRef<HTMLDivElement>(null);
+    const pointerElement = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
-        selectHandler().addEventListener("wheel", handleWheelEvent, {passive: false})
+        handlerElement.current!.addEventListener("wheel", handleWheelEvent, {passive: false})
 
-        selectHandler().addEventListener("mousedown", handleMouseDown)
-        selectHandler().addEventListener("mouseup", handleMouseUp)
+        handlerElement.current!.addEventListener("mousedown", handleMouseDown)
+        handlerElement.current!.addEventListener("mouseup", handleMouseUp)
 
         //setInterval(() => s("current"), 500);
         //selectHandler().addEventListener("mouseout", (e) => setIsMoving(false))
@@ -47,7 +50,7 @@ export const Handler = (props: HandlerProps) => {
 
         if(isMoving == true) {
 
-            let coordonateInfo = selectHandler().getBoundingClientRect();
+            let coordonateInfo = handlerElement.current!.getBoundingClientRect();
             let center = {
                 x: (coordonateInfo.width/ 2) + coordonateInfo.x,
                 y: (coordonateInfo.height / 2) + coordonateInfo.y  
@@ -69,23 +72,14 @@ export const Handler = (props: HandlerProps) => {
         }        
     }
 
-
     return(
-    <div className="handler">
-        <div className={`marker ${props.class}`}></div>
-    </div>
+        <div className="handler" ref={handlerElement}>
+            <div className={`marker ${props.class}`} ref={pointerElement}></div>
+        </div>
     )
 
-    function selectHandler(): HTMLElement {
-        return (document.querySelector(`.handler:has(.${props.class})`) as HTMLElement);
-    }
-
-    function selectPointer(): HTMLElement {
-        return (document.querySelector(`.marker.${props.class}`) as HTMLElement);
-    }
-
     function changeAngle(angle: number) {
-        selectPointer().style.setProperty(`--${props.class}-angle`,`${angle}deg`)
+        pointerElement.current!.style.setProperty(`--${props.class}-angle`,`${angle}deg`)
     }
 
     function countValue() {
@@ -95,10 +89,7 @@ export const Handler = (props: HandlerProps) => {
 
             return Math.round((255/360) * ((angle % 360)))
     }
-
 }
-
-
 
 interface HandlerProps {
     class: string;
