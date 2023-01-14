@@ -10,8 +10,8 @@ export const Handler = (props: HandlerProps) => {
     useEffect(() => {
         selectHandler().addEventListener("wheel", handleWheelEvent, {passive: false})
 
-        selectHandler().addEventListener("mousedown", (e) => {e.stopPropagation();setIsMoving(true); setAngleInMove(angle);})
-        selectHandler().addEventListener("mouseup", (e) => {e.stopPropagation();setIsMoving(false);})
+        selectHandler().addEventListener("mousedown", handleMouseDown)
+        selectHandler().addEventListener("mouseup", handleMouseUp)
 
         //setInterval(() => s("current"), 500);
         //selectHandler().addEventListener("mouseout", (e) => setIsMoving(false))
@@ -33,6 +33,14 @@ export const Handler = (props: HandlerProps) => {
         e.preventDefault()
         e.stopPropagation()
         props.angleValueCallback(countValue())
+    }
+
+    const handleMouseDown = (e: MouseEvent) => {
+        console.log("down " + e.clientX)
+    }
+
+    const handleMouseUp = (e: MouseEvent) => {
+        console.log("up")
     }
 
     const handleMouseDownEvent = (e: MouseEvent) => {
