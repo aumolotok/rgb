@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { isPropertySignature } from "typescript";
 
 export const Handler = (props: HandlerProps) => {
     const [angle, setAngle] = useState(0)
-    const [isMoving, setIsMoving] = useState(false);
+    const [isMoving, toggleIsMoving] = useReducer(status => !status,false);
     const [angleInMove, setAngleInMove] = useState(0)
 
     const handlerElement = useRef<HTMLDivElement>(null);
@@ -39,11 +39,21 @@ export const Handler = (props: HandlerProps) => {
     }
 
     const handleMouseDown = (e: MouseEvent) => {
-        console.log("down " + e.clientX)
+        if(isMoving == false) {
+            toggleIsMoving()
+        }
     }
 
     const handleMouseUp = (e: MouseEvent) => {
-        console.log("up")
+        if(isMoving) {
+            toggleIsMoving()
+        }
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+        if (isMoving) {
+            console.log(e.clientX)
+        }
     }
 
     const handleMouseDownEvent = (e: MouseEvent) => {
