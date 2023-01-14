@@ -5,9 +5,60 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.color {
+  width: calc( (10vw * 3) + 60px );
+  border: 8px black solid;
+  box-shadow: 0px 0px 5px 2px gray;
+  border-radius: 30px;
+  height: 300px;
+}
+
+.handler {
+  height: 10vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: black;
+  margin: 20px;
+  position: relative;
+  box-shadow: 0px 0px 10px 2px gray;
+}
+
+.marker{
+  width: 5%;
+  height: 50%;
+  border-radius: 6px;
+  position: absolute;
+  /* top: 42px;*/
+  left: 47.2%; 
+  
+  transform-origin: 50% 100%;
+}
+
+:root {
+  --color: rgb(0,0,0);
+  --red-angle: 0deg;
+  --green-angle: 0deg;
+  --blue-angle: 0deg;
+}
+
+.marker.red {
+  transform: rotate(var(--red-angle));
+  background-color: rgb(230, 15, 43);
+}
+
+.marker.green {
+  transform: rotate(var(--green-angle));
+  background-color: rgb(4, 220, 33);
+}
+.marker.blue {
+  transform: rotate(var(--blue-angle));
+  background-color: hsl(208, 100%, 50%);
 }
